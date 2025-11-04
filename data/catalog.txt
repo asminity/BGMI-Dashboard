@@ -1,0 +1,9 @@
+Classic Outfit,1
+Victory Emote,3
+Scar-L Skin,5
+AKM Skin,8
+Parachute Skin,10
+Legendary Outfit,15
+Dance Emote,20
+M416 Glacier (Replica),25
+Pfaroh X-suit,15

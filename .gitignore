@@ -1,0 +1,18 @@
+# Build outputs
+bgmi.exe
+bgmi
+*.obj
+*.o
+*.log
+
+# Data files (keep directory, ignore generated contents)
+/data/users.txt
+/data/players/
+/data/matches/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
