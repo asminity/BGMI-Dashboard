@@ -15,8 +15,8 @@ bool KillAchievement::checkAndUpdate(Player& player, const Match&) {
 	return false;
 }
 
-std::string KillAchievement::serialize() const {
-	std::ostringstream os; os << "KILL," << name << "," << completed << "," << rewardXp << "," << targetKills; return os.str();
+string KillAchievement::serialize() const {
+ostringstream os; os << "KILL," << name << "," << completed << "," << rewardXp << "," << targetKills; return os.str();
 }
 
 WinAchievement::WinAchievement(int target, int xpReward) {
@@ -31,17 +31,17 @@ bool WinAchievement::checkAndUpdate(Player& player, const Match&) {
 	return false;
 }
 
-std::string WinAchievement::serialize() const {
-	std::ostringstream os; os << "WIN," << name << "," << completed << "," << rewardXp << "," << targetWins; return os.str();
+string WinAchievement::serialize() const {
+ostringstream os; os << "WIN," << name << "," << completed << "," << rewardXp << "," << targetWins; return os.str();
 }
 
-Achievement* Achievement::deserializeFactory(const std::string& line) {
-	std::istringstream is(line); std::string type, nm; std::string tok; int comp=0, r=0, target=0;
-	if (!std::getline(is, type, ',')) return nullptr;
-	std::getline(is, nm, ',');
-	std::getline(is, tok, ','); comp = std::stoi(tok);
-	std::getline(is, tok, ','); r = std::stoi(tok);
-	std::getline(is, tok, ','); target = std::stoi(tok);
+Achievement* Achievement::deserializeFactory(const string& line) {
+istringstream is(line); string type, nm; string tok; int comp=0, r=0, target=0;
+	if (!getline(is, type, ',')) return nullptr;
+getline(is, nm, ',');
+getline(is, tok, ','); comp = stoi(tok);
+getline(is, tok, ','); r = stoi(tok);
+getline(is, tok, ','); target = stoi(tok);
 	Achievement* a = nullptr;
 	if (type == "KILL") a = new KillAchievement(target, r);
 	else if (type == "WIN") a = new WinAchievement(target, r);

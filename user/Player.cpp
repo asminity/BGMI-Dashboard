@@ -1,10 +1,10 @@
-#include "Player.h"
+ #include "Player.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
 #include "../FileUtil.h"
 
-Player::Player(const std::string& user) : username(user) {
+Player::Player(const string& user) : username(user) {
 	initDefaultAchievements();
 }
 
@@ -13,7 +13,7 @@ Player::~Player() {
 	achievements.clear();
 }
 
-const std::string& Player::getUsername() const { return username; }
+const string& Player::getUsername() const { return username; }
 int Player::getLevel() const { return level; }
 long long Player::getXp() const { return xp; }
 int Player::getTotalMatches() const { return totalMatches; }
@@ -22,7 +22,7 @@ int Player::getTotalKills() const { return totalKills; }
 long long Player::getTotalDamage() const { return totalDamage; }
 int Player::getTotalDeaths() const { return totalDeaths; }
 double Player::getKD() const { return totalDeaths == 0 ? (double)totalKills : (double)totalKills / (double)totalDeaths; }
-const std::string& Player::getRankTier() const { return rankTier; }
+const string& Player::getRankTier() const { return rankTier; }
 Inventory& Player::getInventory() { return inventory; }
 
 void Player::addXp(long long amount) {
@@ -96,12 +96,12 @@ void Player::resetStats() {
 
 bool Player::saveMatches() const {
 	ensureDir("data/matches");
-	std::string path = std::string("data/matches/") + username + ".txt";
-	std::ofstream out(path, std::ios::trunc);
+string path = string("data/matches/") + username + ".txt";
+ofstream out(path, ios::trunc);
 	if (!out) return false;
 	// dump from oldest to newest
-	std::vector<Match> temp;
-	std::stack<Match> copy = matchHistory;
+vector<Match> temp;
+stack<Match> copy = matchHistory;
 	while (!copy.empty()) { temp.push_back(copy.top()); copy.pop(); }
 	for (int i = (int)temp.size() - 1; i >= 0; --i) {
 		out << temp[i].serialize() << "\n";
@@ -111,12 +111,12 @@ bool Player::saveMatches() const {
 
 bool Player::loadMatches() {
 	while (!matchHistory.empty()) matchHistory.pop();
-	std::string path = std::string("data/matches/") + username + ".txt";
-	std::ifstream in(path);
+string path = string("data/matches/") + username + ".txt";
+ifstream in(path);
 	if (!in) return false;
-	std::string line;
-	std::vector<Match> list;
-	while (std::getline(in, line)) {
+string line;
+vector<Match> list;
+	while (getline(in, line)) {
 		if (line.empty()) continue;
 		Match m;
 		if (Match::deserialize(line, m)) list.push_back(m);
@@ -127,8 +127,8 @@ bool Player::loadMatches() {
 
 bool Player::saveToDisk() const {
 	ensureDir("data/players");
-	std::string path = std::string("data/players/") + username + ".txt";
-	std::ofstream out(path, std::ios::trunc);
+string path = string("data/players/") + username + ".txt";
+ofstream out(path, ios::trunc);
 	if (!out) return false;
 	out << username << "\n" << level << " " << xp << "\n";
 	out << totalMatches << " " << totalWins << " " << totalKills << " " << totalDamage << " " << totalDeaths << "\n";
@@ -142,20 +142,20 @@ bool Player::saveToDisk() const {
 }
 
 bool Player::loadFromDisk() {
-	std::string path = std::string("data/players/") + username + ".txt";
-	std::ifstream in(path);
+string path = string("data/players/") + username + ".txt";
+ifstream in(path);
 	if (!in) return false;
-	std::string line;
-	std::getline(in, username);
+string line;
+getline(in, username);
 	in >> level >> xp; in.ignore();
 	in >> totalMatches >> totalWins >> totalKills >> totalDamage >> totalDeaths; in.ignore();
-	std::getline(in, rankTier);
-	std::getline(in, line);
+getline(in, rankTier);
+getline(in, line);
 	inventory.deserialize(line);
 	size_t achCount = 0; in >> achCount; in.ignore();
 	initDefaultAchievements();
 	for (size_t i = 0; i < achCount; ++i) {
-		std::getline(in, line);
+getline(in, line);
 		Achievement* a = Achievement::deserializeFactory(line);
 		if (a) { achievements.push_back(a); }
 	}
@@ -163,8 +163,8 @@ bool Player::loadFromDisk() {
 	return true;
 }
 
-std::string Player::publicSummary() const {
-	std::ostringstream os;
+string Player::publicSummary() const {
+ostringstream os;
 	os << username << ", L" << level << ", Tier: " << rankTier
 	   << ", KD: " << (double)((int)(getKD()*100))/100.0
 	   << ", Matches: " << totalMatches << ", Wins: " << totalWins;

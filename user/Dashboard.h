@@ -10,7 +10,7 @@
 class Dashboard {
 private:
 	UserAuth auth;
-	std::unique_ptr<Player> currentPlayer;
+unique_ptr<Player> currentPlayer;
 public:
 	void run();
 private:

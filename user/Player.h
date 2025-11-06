@@ -9,7 +9,7 @@
 
 class Player {
 private:
-	std::string username;
+string username;
 	int level{1};
 	long long xp{0};
 	int totalMatches{0};
@@ -17,17 +17,17 @@ private:
 	int totalKills{0};
 	long long totalDamage{0};
 	int totalDeaths{0};
-	std::string rankTier{"Bronze"};
+string rankTier{"Bronze"};
 	Inventory inventory;
-	std::vector<Achievement*> achievements; // owned by Player
-	std::stack<Match> matchHistory; // latest on top
+vector<Achievement*> achievements; // owned by Player
+stack<Match> matchHistory; // latest on top
 
 public:
 	Player() = default;
-	explicit Player(const std::string& user);
+	explicit Player(const string& user);
 	~Player();
 
-	const std::string& getUsername() const;
+	const string& getUsername() const;
 	int getLevel() const;
 	long long getXp() const;
 	int getTotalMatches() const;
@@ -36,7 +36,7 @@ public:
 	long long getTotalDamage() const;
 	int getTotalDeaths() const;
 	double getKD() const;
-	const std::string& getRankTier() const;
+	const string& getRankTier() const;
 	Inventory& getInventory();
 
 	void addMatchAndUpdate(const Match& m);
@@ -54,6 +54,6 @@ public:
 	bool loadMatches();
 
 	// public view snapshot
-	std::string publicSummary() const;
+string publicSummary() const;
 };
 

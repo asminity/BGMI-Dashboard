@@ -5,14 +5,14 @@
 
 class Inventory {
 private:
-	std::vector<std::string> ownedItems;
+vector<string> ownedItems;
 public:
 	Inventory() = default;
 	void unlockByLevel(int level);
-	void addItem(const std::string& item);
-	bool hasItem(const std::string& item) const;
-	const std::vector<std::string>& getItems() const;
-	std::string serialize() const;
-	void deserialize(const std::string& line);
+	void addItem(const string& item);
+	bool hasItem(const string& item) const;
+	const vector<string>& getItems() const;
+string serialize() const;
+	void deserialize(const string& line);
 };
 

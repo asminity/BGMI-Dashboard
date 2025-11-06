@@ -10,17 +10,17 @@ void Inventory::unlockByLevel(int level) {
 	}
 }
 
-void Inventory::addItem(const std::string& item) { if (!hasItem(item)) ownedItems.push_back(item); }
+void Inventory::addItem(const string& item) { if (!hasItem(item)) ownedItems.push_back(item); }
 
-bool Inventory::hasItem(const std::string& item) const {
+bool Inventory::hasItem(const string& item) const {
 	for (const auto& it : ownedItems) if (it == item) return true;
 	return false;
 }
 
-const std::vector<std::string>& Inventory::getItems() const { return ownedItems; }
+const vector<string>& Inventory::getItems() const { return ownedItems; }
 
-std::string Inventory::serialize() const {
-	std::ostringstream os;
+string Inventory::serialize() const {
+ostringstream os;
 	for (size_t i = 0; i < ownedItems.size(); ++i) {
 		if (i) os << ';';
 		os << ownedItems[i];
@@ -28,11 +28,11 @@ std::string Inventory::serialize() const {
 	return os.str();
 }
 
-void Inventory::deserialize(const std::string& line) {
+void Inventory::deserialize(const string& line) {
 	ownedItems.clear();
-	std::istringstream is(line);
-	std::string tok;
-	while (std::getline(is, tok, ';')) {
+istringstream is(line);
+string tok;
+	while (getline(is, tok, ';')) {
 		if (!tok.empty()) ownedItems.push_back(tok);
 	}
 }

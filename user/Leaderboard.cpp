@@ -1,9 +1,9 @@
 #include "Leaderboard.h"
 #include <algorithm>
 
-void Leaderboard::setEntries(const std::vector<PublicPlayerInfo>& e) { entries = e; }
+void Leaderboard::setEntries(const vector<PublicPlayerInfo>& e) { entries = e; }
 
-static int tierOrder(const std::string& t) {
+static int tierOrder(const string& t) {
 	if (t == "Conqueror") return 8;
 	if (t == "Ace") return 7;
 	if (t == "Crown") return 6;
@@ -16,11 +16,11 @@ static int tierOrder(const std::string& t) {
 
 void Leaderboard::sortBy(SortBy s) {
 	if (s == SortBy::KD) {
-		std::sort(entries.begin(), entries.end(), [](const auto& a, const auto& b){ return a.kd > b.kd; });
+sort(entries.begin(), entries.end(), [](const auto& a, const auto& b){ return a.kd > b.kd; });
 	} else if (s == SortBy::Level) {
-		std::sort(entries.begin(), entries.end(), [](const auto& a, const auto& b){ return a.level > b.level; });
+sort(entries.begin(), entries.end(), [](const auto& a, const auto& b){ return a.level > b.level; });
 	} else {
-		std::sort(entries.begin(), entries.end(), [](const auto& a, const auto& b){
+sort(entries.begin(), entries.end(), [](const auto& a, const auto& b){
 			int ta = tierOrder(a.tier), tb = tierOrder(b.tier);
 			if (ta != tb) return ta > tb;
 			return a.level > b.level;
@@ -28,5 +28,5 @@ void Leaderboard::sortBy(SortBy s) {
 	}
 }
 
-const std::vector<PublicPlayerInfo>& Leaderboard::getEntries() const { return entries; }
+const vector<PublicPlayerInfo>& Leaderboard::getEntries() const { return entries; }
 

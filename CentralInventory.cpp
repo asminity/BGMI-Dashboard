@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 
-std::vector<CatalogItem> CentralInventory::catalog;
+vector<CatalogItem> CentralInventory::catalog;
 
 void CentralInventory::initializeDefaults() {
 	catalog.clear();
@@ -94,50 +94,50 @@ void CentralInventory::initializeDefaults() {
 	catalog.push_back({"Premium Crate Ticket", 1, "Ticket"});
 }
 
-const std::vector<CatalogItem>& CentralInventory::getCatalog() { return catalog; }
+const vector<CatalogItem>& CentralInventory::getCatalog() { return catalog; }
 
-bool CentralInventory::loadFromFile(const std::string& path) {
-	std::ifstream in(path);
+bool CentralInventory::loadFromFile(const string& path) {
+ifstream in(path);
 	if (!in) return false;
 	catalog.clear();
-	std::string line;
-	while (std::getline(in, line)) {
+string line;
+	while (getline(in, line)) {
 		if (line.empty()) continue;
 		// Support two formats:
 		// 1) name,level (legacy)
 		// 2) category|name|level (new)
 		size_t pipe1 = line.find('|');
-		if (pipe1 != std::string::npos) {
+		if (pipe1 != string::npos) {
 			size_t pipe2 = line.find('|', pipe1+1);
-			if (pipe2 == std::string::npos) continue;
-			std::string cat = line.substr(0, pipe1);
-			std::string name = line.substr(pipe1+1, pipe2 - (pipe1+1));
-			int lvl = std::stoi(line.substr(pipe2+1));
+			if (pipe2 == string::npos) continue;
+string cat = line.substr(0, pipe1);
+string name = line.substr(pipe1+1, pipe2 - (pipe1+1));
+			int lvl = stoi(line.substr(pipe2+1));
 			catalog.push_back({name, lvl, cat});
 		} else {
 			size_t pos = line.rfind(',');
-			if (pos == std::string::npos) continue;
-			std::string name = line.substr(0, pos);
-			int lvl = std::stoi(line.substr(pos+1));
+			if (pos == string::npos) continue;
+string name = line.substr(0, pos);
+			int lvl = stoi(line.substr(pos+1));
 			catalog.push_back({name, lvl, "Misc"});
 		}
 	}
 	return true;
 }
 
-bool CentralInventory::saveToFile(const std::string& path) {
-	std::ofstream out(path, std::ios::trunc);
+bool CentralInventory::saveToFile(const string& path) {
+ofstream out(path, ios::trunc);
 	if (!out) return false;
 	for (const auto& c : catalog) out << c.category << "|" << c.name << "|" << c.minLevel << "\n";
 	return true;
 }
 
-void CentralInventory::addItem(const std::string& name, int minLevel, const std::string& category) {
+void CentralInventory::addItem(const string& name, int minLevel, const string& category) {
 	catalog.push_back({name, minLevel, category});
 }
 
-std::vector<std::string> CentralInventory::listCategories() {
-	std::vector<std::string> cats;
+vector<string> CentralInventory::listCategories() {
+vector<string> cats;
 	for (const auto& c : catalog) {
 		bool found=false; for (const auto& k : cats) if (k==c.category) { found=true; break; }
 		if (!found) cats.push_back(c.category);
@@ -145,13 +145,13 @@ std::vector<std::string> CentralInventory::listCategories() {
 	return cats;
 }
 
-std::vector<CatalogItem> CentralInventory::getByCategory(const std::string& category) {
-	std::vector<CatalogItem> out;
+vector<CatalogItem> CentralInventory::getByCategory(const string& category) {
+vector<CatalogItem> out;
 	for (const auto& c : catalog) if (c.category == category) out.push_back(c);
 	return out;
 }
 
-std::string CentralInventory::getCategoryOf(const std::string& name) {
+string CentralInventory::getCategoryOf(const string& name) {
 	for (const auto& c : catalog) if (c.name == name) return c.category;
 	return "Misc";
 }

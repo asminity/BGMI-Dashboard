@@ -11,12 +11,12 @@ struct Match {
 	int kills{0};
 	long long damage{0};
 	int rankPosition{100};
-	std::string timestamp;
+string timestamp;
 	bool win{false};
 
-	std::string serialize() const;
-	static bool deserialize(const std::string& line, Match& out);
-	static std::string modeToString(MatchMode m);
-	static std::string mapToString(MatchMap m);
+string serialize() const;
+	static bool deserialize(const string& line, Match& out);
+	static string modeToString(MatchMode m);
+	static string mapToString(MatchMap m);
 };
 
