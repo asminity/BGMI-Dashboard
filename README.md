@@ -59,3 +59,6 @@ g++ -std=c++17 -O2 -o bgmi *.cpp
 
 # Or using the provided script
 ./build.ps1
+
+# Run the application
+./bgmi.exe
